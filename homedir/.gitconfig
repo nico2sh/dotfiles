@@ -2,3 +2,5 @@
 [user]
 	name = Nico Hormazabal
 	email = nicolas.hormazabal@schibsted.com
+[push]
+	default = simple
