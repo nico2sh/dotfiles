@@ -171,9 +171,6 @@ fi
 
 alias open="open_command"
 
-# SCH
-source "/home/nicolas/.sch/bin/sch-shell-integration-v1.sh"
-
 # Kubectl version switch
 function toggle-kubectl() {
   if ! alias kubectl 2>/dev/null >/dev/null; then
