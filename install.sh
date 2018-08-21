@@ -67,6 +67,11 @@ ln -s ~/.oh-my-zsh/custom/themes/pure/pure.zsh ~/.oh-my-zsh/functions/prompt_pur
 ln -s ~/.oh-my-zsh/custom/themes/pure/async.zsh ~/.oh-my-zsh/functions/async 2> /dev/null || true
 
 #################################
+# Install Zsh Syntax Highlighting
+#################################
+git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting 2> /dev/null
+ 
+#################################
 # Install FZF
 #################################
 bot "Installing FZF"
