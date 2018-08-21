@@ -1,5 +1,17 @@
 #!/usr/bin/env bash
 
+#################################
+# Move to the directory
+#################################
+SOURCE="${BASH_SOURCE[0]}"
+while [ -h "$SOURCE" ]; do # resolve $SOURCE until the file is no longer a symlink
+  DIR="$( cd -P "$( dirname "$SOURCE" )" >/dev/null && pwd )"
+  SOURCE="$(readlink "$SOURCE")"
+  [[ $SOURCE != /* ]] && SOURCE="$DIR/$SOURCE" # if $SOURCE was a relative symlink, we need to resolve it relative to the path where the symlink file was located
+done
+DIR="$( cd -P "$( dirname "$SOURCE" )" >/dev/null && pwd )"
+cd $DIR
+
 source ./lib_sh/echos.sh
 
 # Ask for the administrator password upfront
@@ -15,13 +27,86 @@ while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
 #################################
 # Install required packages
 #################################
-
 if which dnf > /dev/null; then
-  sudo dnf install -y zsh tmux neovim
+  sudo dnf install -y zsh tmux neovim curl git cmake
 elif which apt-get > /dev/null; then
   sudo apt-get update
-  sudo apt-get install -y zsh tmux neovim
+  sudo apt-get install -y zsh tmux neovim curl git cmake
 else
   error "can't install packages"
   exit 1;
 fi
+
+#################################
+# Install oh my zsh
+#################################
+bot "Installing oh-myh-zsh"
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+
+#################################
+# Install TPM
+#################################
+bot "Installing Tmux Plugin Manager"
+git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm 2> /dev/null
+bot "Tmux Plugin Manager installed, remember to do 'prefix'+I next time you start Tmux"
+
+#################################
+# Copying dotfiles
+#################################
+bot "Creating symlinks for project dotfiles..."
+
+symlinks() {
+  local fullsubpath=$1
+  echo "Creating symlinks for directory $fullsubpath"
+
+  shopt -s dotglob
+  for file in *; do
+    if [[ $file == "." || $file == ".." ]]; then
+      continue
+    fi
+    # Only files
+    if [[ -f "$file" ]]; then
+      if [[ $fullsubpath == "." ]]; then
+        filefullsubpath=$file
+      else
+        filefullsubpath=$fullsubpath/$file
+      fi
+      running "~/$filefullsubpath"
+      # if the file exists:
+      if [[ -e ~/$filefullsubpath ]]; then
+          mkdir -p ~/.dotfiles_backup/$now/$fullsubpath
+          mv ~/$filefullsubpath ~/.dotfiles_backup/$now/$filefullsubpath
+          echo "backup saved as ~/.dotfiles_backup/$now/$filefullsubpath"
+      fi
+      mkdir -p ~/$fullsubpath
+      # symlink might still exist
+      unlink ~/$filefullsubpath > /dev/null 2>&1
+      # create the link
+      ln -s ${DIR}/homedir/$filefullsubpath ~/$filefullsubpath
+      echo -en '\tlinked';ok
+    elif [[ -d "$file" ]]; then
+      pushd $file > /dev/null 2>&1
+
+      if [[ $fullsubpath == "." ]]; then
+        newpath=$file
+      else
+        newpath=${fullsubpath}/${file}
+      fi
+      symlinks $newpath
+
+      popd > /dev/null 2>&1
+    fi
+  done
+}
+
+now=$(date +"%Y.%m.%d.%H.%M.%S")
+pushd homedir > /dev/null 2>&1
+symlinks "."
+popd > /dev/null 2>&1
+
+#################################
+# Install Vim Plugins
+#################################
+git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim 2> /dev/null
+bot "Installing vim plugins"
+vim +PluginInstall +qall > /dev/null 2>&1
