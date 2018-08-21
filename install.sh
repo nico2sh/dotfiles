@@ -14,6 +14,14 @@ cd $DIR
 
 source ./lib_sh/echos.sh
 
+# trap ctrl-c and call ctrl_c()
+trap ctrl_c INT
+
+function ctrl_c() {
+  bot "Interrupting..."
+  exit 1
+}
+
 # Ask for the administrator password upfront
 if ! sudo -n true; then
   # Ask for the administrator password upfront
@@ -41,14 +49,35 @@ fi
 # Install oh my zsh
 #################################
 bot "Installing oh-myh-zsh"
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)" 2> /dev/null || true
+
+#################################
+# Install powerlevel zsh theme
+#################################
+bot "Installing powerlevel zsh theme"
+git clone https://github.com/bhilburn/powerlevel9k.git ~/.oh-my-zsh/custom/themes/powerlevel9k 2> /dev/null || true
+
+#################################
+# Install Pure zsh theme
+#################################
+bot "Installing Pure zsh theme"
+git clone https://github.com/sindresorhus/pure.git ~/.oh-my-zsh/custom/themes/pure 2> /dev/null || true
+
+#################################
+# Install FZF
+#################################
+bot "Installing FZF"
+if git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf 2> /dev/null ; then
+  ~/.fzf/install
+fi
 
 #################################
 # Install TPM
 #################################
 bot "Installing Tmux Plugin Manager"
-git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm 2> /dev/null
-bot "Tmux Plugin Manager installed, remember to do 'prefix'+I next time you start Tmux"
+if git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm 2> /dev/null ; then
+  bot "Tmux Plugin Manager installed, remember to do 'prefix'+I next time you start Tmux"
+fi
 
 #################################
 # Copying dotfiles
@@ -109,4 +138,4 @@ popd > /dev/null 2>&1
 #################################
 git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim 2> /dev/null
 bot "Installing vim plugins"
-vim +PluginInstall +qall > /dev/null 2>&1
+vim +PluginInstall +qall

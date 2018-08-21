@@ -148,7 +148,7 @@ alias cbhs="cat $HISTFILE | tail -n 1 | cb"
 path+=("/sbin")
 path+=("/usr/sbin")
 path+=("$HOME/.local/bin")
-path+=("$HOME/scripts")
+path+=("$HOME/.scripts")
 path+=("$HOME/Android/Sdk/platform-tools")
 path+=("$HOME/.cargo/bin")
 export PATH
