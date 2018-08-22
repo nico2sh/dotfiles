@@ -36,14 +36,19 @@ while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
 # Install required packages
 #################################
 if which dnf > /dev/null; then
-  sudo dnf install -y zsh tmux neovim curl git cmake
+  sudo dnf install -y zsh tmux neovim keychain curl git cmake
 elif which apt-get > /dev/null; then
+  sudo apt-add-repository -y ppa:neovim-ppa/stable
   sudo apt-get update
-  sudo apt-get install -y zsh tmux neovim curl git cmake
+  sudo apt-get install -y zsh tmux keychain curl git cmake
+  # Neovim stuff
+  sudo apt-get install -y software-properties-common
+  sudo apt-get install -y neovim
 else
   error "can't install packages"
   exit 1;
 fi
+
 
 #################################
 # Install oh my zsh
@@ -154,3 +159,4 @@ popd > /dev/null 2>&1
 git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim 2> /dev/null
 bot "Installing vim plugins"
 vim +PluginInstall +qall
+nvim +PluginInstall +qall
