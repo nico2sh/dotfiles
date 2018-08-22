@@ -188,9 +188,6 @@ alias strongbox=/opt/strongbox-cli/bin/strongbox
 # added by travis gem
 [ -f /home/nicolas/.travis/travis.sh ] && source /home/nicolas/.travis/travis.sh
 
-# add thefuck
-eval $(thefuck --alias)
-
 # PyEnv stuff
 export PATH="/home/nicolas/.pyenv/bin:$PATH"
 eval "$(pyenv init -)"
