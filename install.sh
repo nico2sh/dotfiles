@@ -65,11 +65,13 @@ git clone https://github.com/sindresorhus/pure.git ~/.oh-my-zsh/custom/themes/pu
 mkdir -p ~/.oh-my-zsh/functions
 ln -s ~/.oh-my-zsh/custom/themes/pure/pure.zsh ~/.oh-my-zsh/functions/prompt_pure_setup 2> /dev/null || true
 ln -s ~/.oh-my-zsh/custom/themes/pure/async.zsh ~/.oh-my-zsh/functions/async 2> /dev/null || true
+chmod -w ~/.oh-my-zsh/functions
 
 #################################
 # Install Zsh Syntax Highlighting
 #################################
 git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting 2> /dev/null
+chmod -w ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting
  
 #################################
 # Install FZF
@@ -78,6 +80,11 @@ bot "Installing FZF"
 if git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf 2> /dev/null ; then
   ~/.fzf/install
 fi
+
+#################################
+# Install Pyenv
+#################################
+curl -L https://github.com/pyenv/pyenv-installer/raw/master/bin/pyenv-installer | bash 2> /dev/null || true
 
 #################################
 # Install TPM
