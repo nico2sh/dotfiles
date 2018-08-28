@@ -160,3 +160,9 @@ git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim 2
 bot "Installing vim plugins"
 vim +PluginInstall +qall
 nvim +PluginInstall +qall
+
+bot "Done, if you are using Windows, don't forget to add at the beginning of the ~/.bashrc file:
+\n\n# Launch Zsh
+\nif [ -t 1 ]; then
+\n  exec zsh
+\nfi"
