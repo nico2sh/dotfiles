@@ -67,10 +67,10 @@ git clone https://github.com/bhilburn/powerlevel9k.git ~/.oh-my-zsh/custom/theme
 #################################
 bot "Installing Pure zsh theme"
 git clone https://github.com/sindresorhus/pure.git ~/.oh-my-zsh/custom/themes/pure 2> /dev/null || true
-mkdir -p ~/.oh-my-zsh/functions
-ln -s ~/.oh-my-zsh/custom/themes/pure/pure.zsh ~/.oh-my-zsh/functions/prompt_pure_setup 2> /dev/null || true
-ln -s ~/.oh-my-zsh/custom/themes/pure/async.zsh ~/.oh-my-zsh/functions/async 2> /dev/null || true
-chmod -w ~/.oh-my-zsh/functions
+mkdir -p ~/.oh-my-zsh/custom/functions
+ln -s ~/.oh-my-zsh/custom/themes/pure/pure.zsh ~/.oh-my-zsh/custom/functions/prompt_pure_setup 2> /dev/null || true
+ln -s ~/.oh-my-zsh/custom/themes/pure/async.zsh ~/.oh-my-zsh/custom/functions/async 2> /dev/null || true
+chmod -w ~/.oh-my-zsh/custom/functions
 
 #################################
 # Install Zsh Syntax Highlighting

@@ -86,6 +86,7 @@ source $ZSH/oh-my-zsh.sh
 # User configuration
 
 # Pure theme set `ZSH_THEME=""` to enable
+fpath=( "$HOME/.oh-my-zsh/custom/functions" $fpath )
 autoload -U promptinit; promptinit
 prompt pure
 
@@ -172,7 +173,7 @@ fi
 alias open="open_command"
 
 # Kubectl version switch
-function toggle-kubectl() {
+function switch-kubectl() {
   if ! alias kubectl 2>/dev/null >/dev/null; then
     echo "Setting kubectl to version 1.6.0"
     alias kubectl='~/.local/bin/kubectl-1.6.0'
