@@ -59,26 +59,6 @@ export TERM="xterm-256color"
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(git kubectl tmux ssh-agent zsh-syntax-highlighting)
 
-POWERLEVEL9K_SHORTEN_DIR_LENGTH=2
-POWERLEVEL9K_SHORTEN_STRATEGY="truncate_middle"
-POWERLEVEL9K_PROMPT_ON_NEWLINE=true
-POWERLEVEL9K_RPROMPT_ON_NEWLINE=true
-
-POWERLEVEL9K_CONTEXT_DEFAULT_BACKGROUND='black'
-POWERLEVEL9K_CONTEXT_DEFAULT_FOREGROUND='009'
-
-POWERLEVEL9K_DIR_HOME_BACKGROUND='009'
-POWERLEVEL9K_DIR_HOME_FOREGROUND='black'
-
-POWERLEVEL9K_DIR_DEFAULT_BACKGROUND='196'
-POWERLEVEL9K_DIR_DEFAULT_FOREGROUND='232'
-
-POWERLEVEL9K_MULTILINE_FIRST_PROMPT_PREFIX="%F{white}\u256D\u2500%F{white}"
-POWERLEVEL9K_MULTILINE_LAST_PROMPT_PREFIX="%F{white}\u2570\u003E%F{white} "
-
-POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(root_indicator dir_writable dir vcs)
-POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status background_jobs command_execution_time)
-
 PURE_CMD_MAX_EXEC_TIME=1
 
 source $ZSH/oh-my-zsh.sh
@@ -87,8 +67,12 @@ source $ZSH/oh-my-zsh.sh
 
 # Pure theme set `ZSH_THEME=""` to enable
 fpath=( "$HOME/.oh-my-zsh/custom/functions" $fpath )
+
 autoload -U promptinit; promptinit
 prompt pure
+
+fpath=( "$HOME/.oh-my-zsh/custom/completion" $fpath)
+autoload -Uz compinit && compinit -i
 
 # Remove duplicates form history
 setopt EXTENDED_HISTORY
@@ -155,6 +139,7 @@ path+=("$HOME/.cargo/bin")
 export PATH
 
 export JAVA_HOME=$(readlink -f /usr/bin/java | sed "s:bin/java::")
+export ANDROID_HOME="$HOME/Android/Sdk/"
 
 export EDITOR='vim'
 
