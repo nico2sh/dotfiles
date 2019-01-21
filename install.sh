@@ -44,6 +44,8 @@ elif which apt-get > /dev/null; then
   # Neovim stuff
   sudo apt-get install -y software-properties-common
   sudo apt-get install -y neovim
+elif which brew > /dev/null; then
+  brew install zsh tmux neovim keychain curl git cmake
 else
   error "can't install packages"
   exit 1;
@@ -73,10 +75,22 @@ ln -s ~/.oh-my-zsh/custom/themes/pure/async.zsh ~/.oh-my-zsh/custom/functions/as
 chmod -w ~/.oh-my-zsh/custom/functions
 
 #################################
+# Install Zsh Autosuggestions
+#################################
+git clone git://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions 2> /dev/null
+# chmod -w ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions
+
+#################################
+# Install Zsh History Substring Search
+#################################
+git clone https://github.com/zsh-users/zsh-history-substring-search ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-history-substring-search 2> /dev/null
+# chmod -w ~/.oh-my-zsh/custom/plugins/zsh-history-substring-search
+
+#################################
 # Install Zsh Syntax Highlighting
 #################################
 git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting 2> /dev/null
-chmod -w ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting
+# chmod -w ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting
  
 #################################
 # Install FZF
