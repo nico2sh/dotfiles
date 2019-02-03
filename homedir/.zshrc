@@ -57,7 +57,7 @@ ZSH_CUSTOM=$HOME/.oh-my-zsh/custom
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git kubectl tmux ssh-agent zsh-autosuggestions zsh-history-substring-search zsh-syntax-highlighting)
+plugins=(git taskwarrior kubectl tmux ssh-agent zsh-autosuggestions zsh-history-substring-search zsh-syntax-highlighting)
 
 PURE_CMD_MAX_EXEC_TIME=1
 
