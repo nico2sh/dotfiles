@@ -4,7 +4,7 @@
 # if [ "$TMUX" = "" ]; then tmux; fi
 
 # Path to your oh-my-zsh installation.
-export ZSH=/home/nicolas/.oh-my-zsh
+export ZSH=$HOME/.oh-my-zsh
 
 # Set name of the theme to load. Optionally, if you set this to "random"
 # it'll load a random theme each time that oh-my-zsh is loaded.
@@ -116,6 +116,7 @@ setopt histignorespace
 
 alias vim="nvim"
 alias v="nvim"
+alias please='sudo $(fc -ln -1)'
 
 # Aliases / functions leveraging the cb() script
 # ----------------------------------------------
@@ -138,9 +139,6 @@ path+=("$HOME/Android/Sdk/platform-tools")
 path+=("$HOME/.cargo/bin")
 export PATH
 
-export JAVA_HOME=$(readlink -f /usr/bin/java | sed "s:bin/java::")
-export ANDROID_HOME="$HOME/Android/Sdk/"
-
 export EDITOR='vim'
 
 # FZF options for previewing files and expanding commandis from history
@@ -151,37 +149,20 @@ export FZF_CTRL_R_OPTS="--preview 'echo {}' --preview-window down:3:hidden:wrap 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 # load keychain to manage SSH and GPG keys
-if command -v keychain &>/dev/null; then
-  eval `keychain --eval --agents ssh id_rsa`
-fi
+# if command -v keychain &>/dev/null; then
+#   eval `keychain --eval --agents ssh id_rsa`
+# fi
 
 alias open="open_command"
 
-# Kubectl version switch
-function switch-kubectl() {
-  if ! alias kubectl 2>/dev/null >/dev/null; then
-    echo "Setting kubectl to version 1.6.0"
-    alias kubectl='~/.local/bin/kubectl-1.6.0'
-  else
-    echo "Setting kubectl to default version"
-    unalias kubectl
-  fi
-}
+# export JAVA_8_HOME=$(/usr/libexec/java_home -v1.8)
+export JAVA_11_HOME=$(/usr/libexec/java_home -v11)
+export JAVA_12_HOME=$(/usr/libexec/java_home -v12)
 
-# Strongbox
-alias strongbox=/opt/strongbox-cli/bin/strongbox
+# alias java8='export JAVA_HOME=$JAVA_8_HOME'
+alias java11='export JAVA_HOME=$JAVA_11_HOME'
+alias java12='export JAVA_HOME=$JAVA_12_HOME'
 
-# added by travis gem
-[ -f /home/nicolas/.travis/travis.sh ] && source /home/nicolas/.travis/travis.sh
+# default to Java 12
+java12
 
-# PyEnv stuff
-export PATH="/home/nicolas/.pyenv/bin:$PATH"
-eval "$(pyenv init -)"
-eval "$(pyenv virtualenv-init -)"
-
-# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
-export PATH="$PATH:$HOME/.rvm/bin"
-
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion

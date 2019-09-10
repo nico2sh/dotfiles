@@ -66,3 +66,6 @@ set wildmode=full
 " NERDTree
 map <C-n> :NERDTreeToggle<CR>
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif   " Close NERDTree if only window open
+
+" Remaps
+tnoremap <Esc> <C-\><C-n>
